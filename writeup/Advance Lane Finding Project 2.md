@@ -16,7 +16,7 @@ The goals / steps of this project are the following:
 * Warp the detected lane boundaries back onto the original image.
 * Output visual display of the lane boundaries and numerical estimation of lane curvature and vehicle position.
 
-[mp4](result-Copy1.mp4)
+[video](result-Copy1.mp4)
 
 ## Correct the Distortion:
     
@@ -120,9 +120,9 @@ for image in glob.glob('test_images/test*.jpg'):
 ```
 
 
-![png](output_6_0.png)
+![png](output_5_0.png)
 
-![png](output_6_1.png)
+![png](output_5_1.png)
 
 
 
@@ -174,17 +174,17 @@ for image in glob.glob('test_images/test*.jpg'):
 ```
 
 
-![png](output_8_0.png)
+![png](output_6_0.png)
 
-![png](output_8_1.png)
+![png](output_6_1.png)
 
-![png](output_8_2.png)
+![png](output_6_2.png)
 
-![png](output_8_3.png)
+![png](output_6_3.png)
 
-![png](output_8_4.png)
+![png](output_6_4.png)
 
-![png](output_8_5.png)
+![png](output_6_5.png)
 
 
 ## After finding combination of the binary threshold which gives the best result, lets try to Fit a polynomial to the lane line and find vehicle position and Radius of Curvature
@@ -224,9 +224,9 @@ for image in glob.glob('test_images/test*.jpg'):
 ```
 I implemented this step in lines`fill_lane_lines()`.  Here is an example of my result on a test image:
 
-![png](output_10_0.png)
+![png](output_7_0.png)
 
-![png](output_10_1.png)
+![png](output_7_1.png)
 
 
 Now we have estimation of radius of curvature and position of the vehicle 
@@ -246,20 +246,19 @@ white_clip = clip1.fl_image(process_video)
 white_clip.write_videofile(video_output, audio=False)
 ```
 
-
-## discussing problems / issues I faced in implementation of this project
+## discussing problems / Issues I faced in implementation of this project
 
 #### Gradient & Color Thresholding
-Time consuming experiment with gradient and color channnel thresholding.  
-In challenge video when car drives under the bridge it was difficult to find the lane lines
-Detecting lane lines in harder challenge was extremely hard as there were constant curves, fadeness, Shadow 
+* Time consuming experiment with gradient and color channnel thresholding.  
+* In challenge video when car drives under the bridge it was difficult to find the lane lines
+* Detecting lane lines in harder challenge was extremely hard as there were constant curves, fadeness, Shadow 
 
 #### Bad Frames
-The challenge video has a section where the car goes underneath a tunnel and no lanes are detected
-To tackle this I had to resort to averaging over the well detected frames
+* The challenge video has a section where the car goes underneath a tunnel and no lanes are detected
+* To tackle this I had to resort to averaging over the well detected frames
 
-Points of failure & Areas of Improvement
-The pipeline seems to fail for the harder challenge video. 
+##### Points of failure & Areas of Improvement
+The pipeline seems to fail to detect lane lines for the harder challenge video due to frame rate, shahdow, sharp curves. 
 
 #### Improvement:
 I would take a smaller section to take the transform to take a better perspective transform
