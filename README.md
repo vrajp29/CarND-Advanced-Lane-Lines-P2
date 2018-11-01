@@ -2,18 +2,12 @@
 [![Udacity - Self-Driving Car NanoDegree](https://s3.amazonaws.com/udacity-sdc/github/shield-carnd.svg)](http://www.udacity.com/drive)
 
 
-In this project, your goal is to write a software pipeline to identify the lane boundaries in a video, but the main output or product we want you to create is a detailed writeup of the project.  Check out the [writeup template](https://github.com/udacity/CarND-Advanced-Lane-Lines/blob/master/writeup_template.md) for this project and use it as a starting point for creating your own writeup.  
 
-Creating a great writeup:
----
-A great writeup should include the rubric points as well as your description of how you addressed each point.  You should include a detailed description of the code used in each step (with line-number references and code snippets where necessary), and links to other supporting documents or external references.  You should include images in your writeup to demonstrate how your code works with examples.  
+# Udacity Self-Driving Car Engineer Nanodegree
 
-All that said, please be concise!  We're not looking for you to write a book here, just a brief description of how you passed each rubric point, and references to the relevant code :). 
 
-You're not required to use markdown for your writeup.  If you use another method please just submit a pdf of your writeup.
+## Advance Lane Finding - Project 2
 
-The Project
----
 
 The goals / steps of this project are the following:
 
@@ -26,14 +20,109 @@ The goals / steps of this project are the following:
 * Warp the detected lane boundaries back onto the original image.
 * Output visual display of the lane boundaries and numerical estimation of lane curvature and vehicle position.
 
-The images for camera calibration are stored in the folder called `camera_cal`.  The images in `test_images` are for testing your pipeline on single frames.  If you want to extract more test images from the videos, you can simply use an image writing method like `cv2.imwrite()`, i.e., you can read the video in frame by frame as usual, and for frames you want to save for later you can write to an image file.  
+[video](result-Copy1.mp4)
 
-To help the reviewer examine your work, please save examples of the output from each stage of your pipeline in the folder called `output_images`, and include a description in your writeup for the project of what each image shows.    The video called `project_video.mp4` is the video your pipeline should work well on.  
+## Correct the Distortion:
+    
+Lets remove distortion from the images using camera calibbration matrix and distortion coefficients using chessboard
 
-The `challenge_video.mp4` video is an extra (and optional) challenge for you if you want to test your pipeline under somewhat trickier conditions.  The `harder_challenge.mp4` video is another optional challenge and is brutal!
+In this exercise, you'll use the OpenCV functions findChessboardCorners() and drawChessboardCorners() to automatically find and draw corners in an image of a chessboard pattern 
 
-If you're feeling ambitious (again, totally optional though), don't stop there!  We encourage you to go out and take video of your own, calibrate your camera and show us how you would implement this project from scratch!
+![png](output_3_0.png)
 
-## How to write a README
-A well written README file can enhance your project and portfolio.  Develop your abilities to create professional README files by completing [this free course](https://www.udacity.com/course/writing-readmes--ud777).
+![png](output_3_1.png)
+
+## Remove distortion from images
+There are two main steps to this process: use chessboard images to obtain image points and object points, and then use the OpenCV functions cv2.calibrateCamera() and cv2.undistort() to remove distortion from highway driving images
+
+If you look around the edges of both original and undistorted images, you will observe that distortion is removed from original images
+
+
+[png](output_4_0.png)
+
+![png](output_4_1.png)
+
+## Now lest perfrom the perspective transformation:
+
+A perspective transform maps the points in a given image to different, desired, image points with a new perspective. The perspective transform you’ll be most interested in is a bird’s-eye view transform that let’s us view a lane from above; this will be useful for calculating the lane curvature later on. 
+
+Here we apply a perspective transform, choosing four source points manually
+
+src = np.float32([[490, 482],[810, 482],
+                 [1300, 720],[40, 720]])
+dst = np.float32([[0, 0], [1280, 0], 
+
+I used cv2.getPerspectiveTransform() to get M, the transform matrix
+M = cv2.getPerspectiveTransform(src, dst)
+
+And the I used cv2.warpPerspective() to apply M and warp your image to a top-down view
+warped = cv2.warpPerspective(undist, M, img_size)
+
+![png](output_5_0.png)
+
+![png](output_5_1.png)
+
+
+## Lets see what happend when we apply Binary Thresholds
+
+Here we try to apply different color space and identify which provides better lane lines and ignore the onces which give some noise
+
+Used S channel from HLS color space
+
+Used L channel from LUV color space
+
+Used B channel from Lab color space
+
+Create combination binary threshold which best highlights lane lines
+
+
+![png](output_6_3.png)
+
+## After finding combination of the binary threshold which gives the best result, lets try to Fit a polynomial to the lane line and find vehicle position and Radius of Curvature
+
+### I used following steps to achieve this:
+#### Line Finding Method: Peaks in a Histogram and finding the non-zero pixels around peaks using numpy.nonzero()
+#### Fit the polynomial to the lane numpy.polyfit()
+#### For each lane line measure radius of curvature     
+#### Calculate the position of the vehicle
+
+I implemented this step in lines`fill_lane_lines()`.  Here is an example of my result on a test image:
+
+![png](output_7_0.png)
+
+![png](output_7_1.png)
+
+
+Now we have estimation of radius of curvature and position of the vehicle 
+
+
+## Lets create function process_video() which will process video frame by frame:
+We cobine all the above code blocks with all averaging and fallback concepts. *Process_video()* is the final pipeline: Cell #108, `P2 - Advance Lane Finding Project.ipynd`
+
+Here is [link to my video result](https://www.youtube.com/watch?v=pbDZBV0_m4M) You will be redirected to YouTube. 
+
+## discussing problems / Issues I faced in implementation of this project
+
+#### Gradient & Color Thresholding
+* Time consuming experiment with gradient and color channnel thresholding.  
+* In challenge video when car drives under the bridge it was difficult to find the lane lines
+* Detecting lane lines in harder challenge was extremely hard as there were constant curves, fadeness, Shadow 
+
+#### Bad Frames
+* The challenge video has a section where the car goes underneath a tunnel and no lanes are detected
+* To tackle this I had to resort to averaging over the well detected frames
+
+##### Points of failure & Areas of Improvement
+The pipeline seems to fail to detect lane lines for the harder challenge video due to frame rate, shahdow, sharp curves. 
+
+#### Improvement:
+I would take a smaller section to take the transform to take a better perspective transform
+I would average over a smaller number of frames.
+
+Additional option Challenge video: The pipeline did prity good job in detecting lane lines even though it having some hard time when car passed under a bridge or throught tunnel   
+Here's the [link to my video Challenge output video](https://www.youtube.com/watch?v=xzmUQdYRtc0) You will be redirected to YouTube. 
+
+
+
+  
 
