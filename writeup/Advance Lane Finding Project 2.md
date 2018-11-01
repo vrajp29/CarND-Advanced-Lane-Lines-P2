@@ -246,20 +246,19 @@ white_clip = clip1.fl_image(process_video)
 white_clip.write_videofile(video_output, audio=False)
 ```
 
-
-## discussing problems / issues I faced in implementation of this project
+## discussing problems / Issues I faced in implementation of this project
 
 #### Gradient & Color Thresholding
-Time consuming experiment with gradient and color channnel thresholding.  
-In challenge video when car drives under the bridge it was difficult to find the lane lines
-Detecting lane lines in harder challenge was extremely hard as there were constant curves, fadeness, Shadow 
+* Time consuming experiment with gradient and color channnel thresholding.  
+* In challenge video when car drives under the bridge it was difficult to find the lane lines
+* Detecting lane lines in harder challenge was extremely hard as there were constant curves, fadeness, Shadow 
 
 #### Bad Frames
-The challenge video has a section where the car goes underneath a tunnel and no lanes are detected
-To tackle this I had to resort to averaging over the well detected frames
+* The challenge video has a section where the car goes underneath a tunnel and no lanes are detected
+* To tackle this I had to resort to averaging over the well detected frames
 
-Points of failure & Areas of Improvement
-The pipeline seems to fail for the harder challenge video. 
+##### Points of failure & Areas of Improvement
+The pipeline seems to fail to detect lane lines for the harder challenge video due to frame rate, shahdow, sharp curves. 
 
 #### Improvement:
 I would take a smaller section to take the transform to take a better perspective transform
