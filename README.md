@@ -3,11 +3,7 @@
 
 
 
-# Udacity Self-Driving Car Engineer Nanodegree
-
-
-## Advance Lane Finding - Project 2
-
+## Udacity Self-Driving Car Engineer Nanodegree
 
 The goals / steps of this project are the following:
 
@@ -20,7 +16,7 @@ The goals / steps of this project are the following:
 * Warp the detected lane boundaries back onto the original image.
 * Output visual display of the lane boundaries and numerical estimation of lane curvature and vehicle position.
 
-[Video](result-Copy1.mp4)
+![mp4](result.mp4)
 ![png](output_7_1.png)
 
 ## Correct the Distortion:
