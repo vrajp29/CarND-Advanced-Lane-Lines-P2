@@ -16,7 +16,7 @@ The goals / steps of this project are the following:
 * Warp the detected lane boundaries back onto the original image.
 * Output visual display of the lane boundaries and numerical estimation of lane curvature and vehicle position.
 
-[mp4](result-Copy1.mp4)
+[video](result-Copy1.mp4)
 
 ## Correct the Distortion:
     
@@ -120,9 +120,9 @@ for image in glob.glob('test_images/test*.jpg'):
 ```
 
 
-![png](output_6_0.png)
+![png](output_5_0.png)
 
-![png](output_6_1.png)
+![png](output_5_1.png)
 
 
 
@@ -174,17 +174,17 @@ for image in glob.glob('test_images/test*.jpg'):
 ```
 
 
-![png](output_8_0.png)
+![png](output_6_0.png)
 
-![png](output_8_1.png)
+![png](output_6_1.png)
 
-![png](output_8_2.png)
+![png](output_6_2.png)
 
-![png](output_8_3.png)
+![png](output_6_3.png)
 
-![png](output_8_4.png)
+![png](output_6_4.png)
 
-![png](output_8_5.png)
+![png](output_6_5.png)
 
 
 ## After finding combination of the binary threshold which gives the best result, lets try to Fit a polynomial to the lane line and find vehicle position and Radius of Curvature
@@ -224,9 +224,9 @@ for image in glob.glob('test_images/test*.jpg'):
 ```
 I implemented this step in lines`fill_lane_lines()`.  Here is an example of my result on a test image:
 
-![png](output_10_0.png)
+![png](output_7_0.png)
 
-![png](output_10_1.png)
+![png](output_7_1.png)
 
 
 Now we have estimation of radius of curvature and position of the vehicle 
