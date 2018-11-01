@@ -28,9 +28,9 @@ Lets remove distortion from the images using camera calibbration matrix and dist
 
 In this exercise, you'll use the OpenCV functions findChessboardCorners() and drawChessboardCorners() to automatically find and draw corners in an image of a chessboard pattern 
 
-![png]CarND-Advanced-Lane-Lines-P2/blob/master/writeup/output_3_1.png)
+![png](output_3_1.png)
 
-![png](blob/master/writeup/output_3_1.png)
+![png](output_3_1.png)
 
 ## Remove distortion from images
 There are two main steps to this process: use chessboard images to obtain image points and object points, and then use the OpenCV functions cv2.calibrateCamera() and cv2.undistort() to remove distortion from highway driving images
@@ -38,9 +38,9 @@ There are two main steps to this process: use chessboard images to obtain image 
 If you look around the edges of both original and undistorted images, you will observe that distortion is removed from original images
 
 
-[png](blob/master/writeup/output_4_0.png)
+[png](output_4_0.png)
 
-![png](blob/master/writeup/output_4_1.png)
+![png](output_4_1.png)
 
 ## Now lest perfrom the perspective transformation:
 
