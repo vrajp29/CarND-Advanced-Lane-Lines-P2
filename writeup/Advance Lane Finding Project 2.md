@@ -20,7 +20,7 @@ The goals / steps of this project are the following:
 
 ## Correct the Distortion:
     
-Lets remove distortion from the images using camera calibbration matrix and distortion coefficients using chessboard
+Lets remove distortion from the images using camera calibration matrix and distortion coefficients using chessboard
 
 In this exercise, you'll use the OpenCV functions findChessboardCorners() and drawChessboardCorners() to automatically find and draw corners in an image of a chessboard pattern, 
 ```python
